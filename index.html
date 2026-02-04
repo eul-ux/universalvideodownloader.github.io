@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Downloader – Legal Template</title>
+  <style>
+    body{font-family:system-ui,Segoe UI,Roboto,Arial; background:#0f172a; color:#e5e7eb; min-height:100vh; display:flex; align-items:center; justify-content:center}
+    .card{background:#020617; border-radius:16px; padding:24px; width:min(520px,92vw); box-shadow:0 20px 40px rgba(0,0,0,.4)}
+    h1{font-size:1.25rem; margin-bottom:8px}
+    p{opacity:.8; line-height:1.5}
+    input,button{width:100%; padding:14px; border-radius:12px; border:1px solid #1f2937; background:#020617; color:#e5e7eb}
+    button{margin-top:12px; cursor:pointer; background:#2563eb; border:none}
+    button:disabled{opacity:.5; cursor:not-allowed}
+    .note{margin-top:12px; font-size:.85rem; opacity:.7}
+    .ok{color:#22c55e}
+    .err{color:#ef4444}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Video Downloader (Legal-Only)</h1>
+    <p>This template downloads <b>direct video files</b> (e.g., .mp4 links) or content you <b>own</b> or have <b>explicit permission</b> to download. Platforms with DRM or ToS restrictions are not supported.</p><input id="url" placeholder="Paste a direct .mp4/.webm video URL" />
+<button id="go">Download</button>
+<div id="msg" class="note"></div>
+
+<div class="note">Why this limitation? Respect creators, laws, and platform rules. This is a clean, deployable starter you can extend <b>only</b> with permitted APIs.</div>
+
+  </div>  <script>
+    const btn = document.getElementById('go');
+    const msg = document.getElementById('msg');
+    btn.onclick = () => {
+      const url = document.getElementById('url').value.trim();
+      msg.textContent = '';
+      if(!url) return show('Please paste a video URL.', true);
+      // Allow only direct video files
+      if(!/\.(mp4|webm|ogg)(\?|#|$)/i.test(url)){
+        return show('Only direct video file URLs are allowed in this legal template.', true);
+      }
+      // Trigger browser download
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = '';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      show('Download started (browser-handled).', false);
+    };
+    function show(text, isErr){
+      msg.textContent = text;
+      msg.className = 'note ' + (isErr ? 'err':'ok');
+    }
+  </script></body>
+</html>
